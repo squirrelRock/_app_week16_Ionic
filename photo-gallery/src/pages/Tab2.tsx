@@ -18,9 +18,14 @@ import {
 import ExploreContainer from '../components/ExploreContainer';
 import './Tab2.css';
 import { camera, trash, close } from 'ionicons/icons';
+import { usePhotoGallery } from '../hooks/usePhotoGallery';
 
 
 const Tab2: React.FC = () => {
+  
+    const { takePhoto } = usePhotoGallery();
+  
+    // snip - rest of code
   return (
     <IonPage>
       <IonHeader>
