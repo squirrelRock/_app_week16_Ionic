@@ -21,10 +21,10 @@ import { camera, trash, close } from 'ionicons/icons';
 import { usePhotoGallery } from '../hooks/usePhotoGallery';
 
 
+
 const Tab2: React.FC = () => {
   
-    const { takePhoto } = usePhotoGallery();
-  
+  const { photos, takePhoto } = usePhotoGallery(); 
     // snip - rest of code
   return (
     <IonPage>
@@ -54,3 +54,7 @@ const Tab2: React.FC = () => {
 };
 
 export default Tab2;
+
+
+
+
