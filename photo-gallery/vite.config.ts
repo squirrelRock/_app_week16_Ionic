@@ -10,9 +10,9 @@ export default defineConfig({
     react(),
     legacy()
   ],
-  optimizeDeps: {
-    exclude: ['web-TXZRKSZZ'], // Exclude the problematic dependency
-  },
+  // optimizeDeps: {
+  //   exclude: ['web-TXZRKSZZ'], // Exclude the problematic dependency
+  // },
   test: {
     globals: true,
     environment: 'jsdom',
