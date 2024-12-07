@@ -17,86 +17,91 @@ export function usePhotoGallery() {
   const [photos, setPhotos] = useState<UserPhoto[]>([]);
 
   /**
-   * useEffect - Load saved photos from Preferences when the hook loads
+   * useEffect -loading the saved photos from Preferences when the hook loads
    */
   useEffect(() => {
     const loadSaved = async () => {
       try {
-        // Retrieve photos saved in Preferences
+        // getphotos saved in preferences
         const { value } = await Preferences.get({ key: PHOTO_STORAGE });
         const photosInPreferences = (value ? JSON.parse(value) : []) as UserPhoto[];
-
+      // If running on the web...
         if (!isPlatform('hybrid')) {
-          // On web platforms, load Base64 data for display
+          //for web platforms, load Base64 data 
           for (let photo of photosInPreferences) {
             try {
               const file = await Filesystem.readFile({
                 path: photo.filepath,
                 directory: Directory.Data,
               });
+      // Web platform only: Load the photo as base64 data
               photo.webviewPath = `data:image/jpeg;base64,${file.data}`;
             } catch (err) {
-              console.error(`Failed to read file: ${photo.filepath}`, err);
+              console.error(`fail - reading file: ${photo.filepath}`, err);
             }
           }
         }
 
         setPhotos(photosInPreferences);
       } catch (err) {
-        console.error('Failed to load saved photos', err);
+        console.error('watch out - fail loading saved photos', err);
       }
     };
 
-    loadSaved(); // Call the async function to load photos
-  }, []); // Run only once when the hook is initialized
+    loadSaved(); // call the function to load photos
+  }, []); // run only once when the hook is initialized
 
-  /**
-   * takePhoto - Capture a new photo and save it
-   */
+  //
+   //takePhoto - snap a new photo and save it
+  // 
   const takePhoto = async () => {
     try {
-      // Capture a photo using the Capacitor Camera plugin
+      // snap a photo using the Capacitor Camera plugin
       const photo = await Camera.getPhoto({
         resultType: CameraResultType.Uri,
         source: CameraSource.Camera,
         quality: 100,
       });
 
-      const fileName = `${Date.now()}.jpeg`; // Create a unique filename
-      const savedFileImage = await savePicture(photo, fileName); // Save the photo
+      const fileName = `${Date.now()}.jpeg`; // make a unique filename
+      const savedFileImage = await savePicture(photo, fileName); // save the photo
 
-      // Update the state and persist photos
+      // update the state and store the photos
       const newPhotos = [savedFileImage, ...photos];
       setPhotos(newPhotos);
+
+
       await Preferences.set({ key: PHOTO_STORAGE, value: JSON.stringify(newPhotos) });
+
     } catch (err) {
-      console.error('Failed to take photo', err);
+      console.error('taking photo failed', err);
     }
   };
 
-  /**
-   * savePicture - Save the photo to the filesystem
-   * @param photo The photo object from Capacitor Camera
-   * @param fileName The desired filename for the photo
-   */
+  
+   //savePicture - saving the photo to the filesystem
+   // @)param photo : photo object from Capacitor Camera
+   // @)param fileName :  filename for the photo
+
   const savePicture = async (photo: Photo, fileName: string): Promise<UserPhoto> => {
     try {
       let base64Data: string | Blob;
+       // "hybrid" will detect Cordova or Capacitor;
 
       if (isPlatform('hybrid')) {
         // For hybrid platforms, read the file directly from the path
-        if (!photo.path) throw new Error('Photo path is undefined on hybrid platform');
+        if (!photo.path) throw new Error('undefined photo path on hybrid platform');
         const file = await Filesystem.readFile({
           path: photo.path,
         });
         base64Data = file.data;
       } else {
         // For web platforms, convert the photo's webPath to Base64
-        if (!photo.webPath) throw new Error('Photo webPath is undefined on web platform');
+        if (!photo.webPath) throw new Error('undefined photo webPath  on web platform');
         base64Data = await base64FromPath(photo.webPath);
       }
 
-      // Write the photo file to the filesystem
+      // writing the photo file to the filesystem
       const savedFile = await Filesystem.writeFile({
         path: fileName,
         data: base64Data,
@@ -104,13 +109,16 @@ export function usePhotoGallery() {
       });
 
       if (isPlatform('hybrid')) {
-        // On hybrid platforms, return the URI for the saved photo
+        // Display the new image by rewriting the 'file://' path to HTTP
+    // Details: https://ionicframework.com/docs/building/webview#file-protocol
         return {
           filepath: savedFile.uri,
           webviewPath: Capacitor.convertFileSrc(savedFile.uri),
         };
       } else {
-        // On web platforms, return the file path and webPath
+         // Use webPath to display the new image instead of base64 since it's
+    // already loaded into memory
+        // on web platforms, return the file path and webPath
         return {
           filepath: fileName,
           webviewPath: photo.webPath,
@@ -122,19 +130,18 @@ export function usePhotoGallery() {
     }
   };
 
-  /**
-   * Return hook values
-   */
+  //returning the hook values
+
   return {
     photos,
     takePhoto,
   };
 }
 
-/**
- * base64FromPath - Convert an image path to a Base64 string
- * @param path The image path (e.g., webPath)
- */
+//
+// base64FromPath - convert an image path to a Base64 string
+//(@)param path --- where the image path is the webPath)
+//
 export async function base64FromPath(path: string): Promise<string> {
   const response = await fetch(path);
   const blob = await response.blob();
