@@ -1,0 +1,60 @@
+
+.merienda-thick {
+    font-family: "Merienda", cursive;
+    font-size: 1.9em;
+    font-optical-sizing: auto;
+    font-weight: 600;
+    font-style: normal;
+  }
+
+  .merienda-thin {
+    font-family: "Merienda", cursive;
+    font-optical-sizing: auto;
+    font-size: 1.2em;
+    font-weight: 400;
+    font-style: normal;
+  }
+  
+  
+
+  .photo-container {
+    position: relative;
+  }
+  
+  .photo-wrapper {
+    position: relative;
+    width: 100%; 
+    aspect-ratio: 1 / 1; 
+    overflow: hidden;
+    border: 5px solid white; /* a frame */
+    border-radius: 10px; 
+  }
+  
+  .photo {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; 
+  }
+  
+  .delete-button {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    background-color: rgba(0, 0, 0, 0.7); 
+    color: white;
+    border-radius: 3%; 
+    width: 40px; 
+    height: 20px;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1;
+    border: none;
+  }
+  
+  .delete-button ion-icon {
+    font-size: 16px; /* smaller than button */
+    color: white;
+    z-index: 2;
+  }

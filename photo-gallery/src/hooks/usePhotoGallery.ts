@@ -48,11 +48,11 @@ export function usePhotoGallery() {
       }
     };
 
-    loadSaved(); // call the function to load photos
-  }, []); // run only once when the hook is initialized
+    loadSaved(); // call the function to load up photos
+  }, []); // [] - establishes to run only once: when the hook is initialized
 
   //
-   //takePhoto - snap a new photo and save it
+   //takePhoto - snap a beautiful new photo and save it
   // 
   const takePhoto = async () => {
     try {
@@ -80,8 +80,8 @@ export function usePhotoGallery() {
 
   
    //savePicture - saving the photo to the filesystem
-   // @)param photo : photo object from Capacitor Camera
-   // @)param fileName :  filename for the photo
+   // param photo : photo object from Capacitor Camera
+   // param fileName :  filename for the photo
 
   const savePicture = async (photo: Photo, fileName: string): Promise<UserPhoto> => {
     try {
@@ -130,17 +130,35 @@ export function usePhotoGallery() {
     }
   };
 
+  ///deleting function
+const deletePhoto = async (filepath: string) => {
+  // Remove photo from filesystem
+  await Filesystem.deleteFile({
+    path: filepath,
+    directory: Directory.Data,
+  });
+
+  // Update state
+  const updatedPhotos = photos.filter((photo) => photo.filepath !== filepath);
+  setPhotos(updatedPhotos);
+
+  // Update Preferences
+  Preferences.set({ key: PHOTO_STORAGE, value: JSON.stringify(updatedPhotos) });
+};
   //returning the hook values
 
   return {
     photos,
     takePhoto,
+    deletePhoto,
   };
 }
 
 //
+
+
 // base64FromPath - convert an image path to a Base64 string
-//(@)param path --- where the image path is the webPath)
+//param path --- where the image path is the webPath)
 //
 export async function base64FromPath(path: string): Promise<string> {
   const response = await fetch(path);
@@ -158,3 +176,4 @@ export async function base64FromPath(path: string): Promise<string> {
     reader.readAsDataURL(blob);
   });
 }
+

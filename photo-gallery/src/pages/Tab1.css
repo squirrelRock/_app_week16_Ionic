@@ -1,0 +1,121 @@
+/* Page Container */
+
+body {
+
+    font-weight: 500;
+}
+
+.indie-flower-regular {
+    font-family: "Indie Flower", serif;
+    font-weight: 500;
+    font-style: normal;
+  }
+
+  /*  merienda-thick: Use a unique and descriptive class name
+  // <weight>: Use a value from 300 to 900 */
+  
+  .merienda-thick {
+    font-family: "Merienda", cursive;
+    font-size: 1.9em;
+    font-optical-sizing: auto;
+    font-weight: 600;
+    font-style: normal;
+  }
+
+  .merienda-thin {
+    font-family: "Merienda", cursive;
+    font-optical-sizing: auto;
+    font-size: 1.2em;
+    font-weight: 400;
+    font-style: normal;
+  }
+  
+
+  
+.page-container {
+    background-color: #f3f1ef; 
+    min-height: 100vh;
+    padding: 40px 20px;
+    box-sizing: border-box;
+  }
+  
+  /* Page Title */
+  .page-title {
+    font-family: "Merienda", serif;
+    font-size: 1.8em;
+    letter-spacing: .0em;
+    font-weight: 600;
+    text-align: center;
+    margin-bottom: 40px;
+    color: #5a3d1a;
+  }
+  
+  /* Grid Layout */
+  .grid-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+    justify-content: center;
+  }
+  
+  .grid-item {
+    text-decoration: none;
+  }
+  
+  /* Card Styling */
+  .card {
+    background-color: #ffffff;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+    transition: transform 0.2s, box-shadow 0.2s; 
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15); 
+  }
+  
+  /* Image Container
+  .image-container {
+    height: 225px; 
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #f8f8f8; 
+  }
+   */
+ 
+
+  /* Image Container */
+.image-container {
+    font-family: "Sue Ellen Francisco", cursive;
+    font-weight: 500;
+    padding: 10px; 
+    height: auto; 
+    background-color: #e7e4f1; 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px 10px 0px 0px; ; 
+  }
+  
+  /* Rock Image */
+  .rock-image {
+    width: 100%;
+    height: auto;
+    object-fit: cover; 
+    border-radius: 5px ; 
+  }
+  
+  /* Card Title */
+  .card-title {
+    font-size: 18px;
+    color: #5a3d1a;
+    margin: 10px 0;
+    text-align: center;
+  }
