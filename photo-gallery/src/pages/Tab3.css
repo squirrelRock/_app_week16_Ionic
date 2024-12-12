@@ -1,0 +1,53 @@
+
+
+.page-container {
+    background-color: #f3f1ef;
+    min-height: 100vh;
+    padding: 20px;
+    box-sizing: border-box;
+  }
+  
+  .page-title {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #5a3d1a;
+    font-family: 'Merienda', cursive;
+  }
+  
+  .grid-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+  }
+  
+  .grid-item {
+    text-decoration: none;
+  }
+  
+  .card {
+    background-color: #ffffff;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 10px;
+  }
+  
+  .video-container {
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
+    overflow: hidden;
+  }
+  
+  .video-player {
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
+  }
+  
+  .card-title {
+    font-size: 18px;
+    color: #5a3d1a;
+    margin-top: 10px;
+    text-align: center;
+  }

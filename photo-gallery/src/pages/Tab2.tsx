@@ -12,7 +12,8 @@ import {
   IonCol,
   IonImg,
   IonButton,
-  IonAlert,
+  IonModal,
+  IonText,
 } from '@ionic/react';
 
 import { camera, close } from 'ionicons/icons';
@@ -22,26 +23,27 @@ import './Tab2.css';
 
 const Tab2: React.FC = () => {
   const { photos, takePhoto, deletePhoto } = usePhotoGallery();
-  const [showAlert, setShowAlert] = useState(false);
+  const [showModal, setShowModal] = useState(false);
   const [selectedPhoto, setSelectedPhoto] = useState<string | null>(null);
 
   const handleDelete = (filepath: string) => {
-    setSelectedPhoto(filepath); // store the selected photo
-    setShowAlert(true); // 
-  }
+    setSelectedPhoto(filepath); 
+    setShowModal(true); // show the modal
+  };
+
   const confirmDelete = () => {
     if (selectedPhoto) {
-      deletePhoto(selectedPhoto); // deletePhoto for the selected photo
+      deletePhoto(selectedPhoto); 
       setSelectedPhoto(null); // reset selection
     }
-    setShowAlert(false); // close alert
+    setShowModal(false); // close the modal
   };
 
   return (
     <IonPage>
       <IonHeader>
         <IonToolbar>
-          <IonTitle className ="merienda-thick">Photo Gallery</IonTitle>
+          <IonTitle>Photo Gallery</IonTitle>
         </IonToolbar>
       </IonHeader>
       <IonContent fullscreen>
@@ -57,7 +59,7 @@ const Tab2: React.FC = () => {
               <IonCol size="6" key={photo.filepath} className="photo-container">
                 <div className="photo-wrapper">
                   <IonImg src={photo.webviewPath} className="photo" />
-                  {/* Delete Button */}
+                  {/* delete Button */}
                   <IonButton
                     fill="clear"
                     className="delete-button"
@@ -71,26 +73,23 @@ const Tab2: React.FC = () => {
           </IonRow>
         </IonGrid>
 
-        {/* Confirmation Dialog */}
-        <IonAlert
-          isOpen={showAlert}
-          onDidDismiss={() => setShowAlert(false)}
-          header="Delete Photo"
-          message="Do you really want to lose this recording of the photons that were being reflected off your chosen subject at this particular moment in time? This action cannot be undone."
-          buttons={[
-            {
-              text: 'Cancel',
-              role: 'cancel',
-              handler: () => {
-                setSelectedPhoto(null); // reset on cancel
-              },
-            },
-            {
-              text: 'Delete',
-              handler: confirmDelete,
-            },
-          ]}
-        />
+        {/* confirm delete modal */}
+        <IonModal isOpen={showModal} onDidDismiss={() => setShowModal(false)}>
+          <div className="modal-content">
+            <IonText color="primary">
+              <h2>Delete Photo</h2>
+            </IonText>
+            <p>Do you really want to lose this recording of the moment in time that those particular photons were being reflected off your chosen subject? This action cannot be undone.</p>
+            <div className="modal-buttons">
+              <IonButton onClick={() => setShowModal(false)} color="medium">
+                Cancel
+              </IonButton>
+              <IonButton onClick={confirmDelete} color="danger">
+                Delete
+              </IonButton>
+            </div>
+          </div>
+        </IonModal>
 
         <IonFab vertical="bottom" horizontal="center" slot="fixed">
           <IonFabButton onClick={() => takePhoto()}>

@@ -1,4 +1,18 @@
 
+body {
+
+    font-weight: 500;
+}
+
+.indie-flower-regular {
+    font-family: "Indie Flower", serif;
+    font-weight: 500;
+    font-style: normal;
+  }
+
+
+
+
 .merienda-thick {
     font-family: "Merienda", cursive;
     font-size: 1.9em;
@@ -26,7 +40,7 @@
     width: 100%; 
     aspect-ratio: 1 / 1; 
     overflow: hidden;
-    border: 5px solid white; /* a frame */
+    border: 5px solid white; /* frame */
     border-radius: 10px; 
   }
   
@@ -57,4 +71,36 @@
     font-size: 16px; /* smaller than button */
     color: white;
     z-index: 2;
+  }
+
+  .modal-content {
+    padding: 20px;
+    text-align: center;
+  }
+  
+  .modal-content h2 {
+    font-family: "Indie Flower", serif;
+    font-weight: 700;
+    letter-spacing: .1em;
+    margin-bottom: 10px;
+    font-size: 24px;
+  }
+  
+  .modal-content p {
+    font-family: "Indie Flower", serif;
+    margin-bottom: 20px;
+    font-size: 16px;
+    font-weight: 600;
+    letter-spacing: .1em;
+    color: #f1e9a9;
+  }
+  
+  .modal-buttons ion-button {
+    font-family: "Indie Flower", serif !important; 
+    padding-top: 5px;
+    font-weight: 400 !important;
+    letter-spacing: 0.1em !important; 
+    color: #333 !important; 
+    text-transform: none !important;
+    font-size: 16px !important; 
   }
